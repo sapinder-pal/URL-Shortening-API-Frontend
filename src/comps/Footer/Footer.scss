@@ -1,0 +1,78 @@
+@import '../colors.scss';
+
+.footer {
+	background: get-color(extreme-violet);
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	
+	.brand {
+		margin-right: 5%;
+		margin-bottom: 15%;
+
+		path {
+			fill: white;
+		}
+	}
+	
+	.references {
+		margin: auto 5% auto auto;
+		display: grid;
+		grid-template-areas: 
+		"reference-1 reference-2 reference-3"
+		"...            ...      reference-3";
+		column-gap: 50px;
+
+		@for $i from 1 through 3 {
+			.reference-group-#{$i} {
+
+				grid-area: reference-#{$i};
+
+				.group-title {
+					color: white;
+					margin: 0 0 20px;
+				}
+				.navlink {
+					margin: 10px 0;
+					display: block;
+					color: get-color(grayish-violet);
+					&:hover {
+						color: get-color(cyan);
+					}
+				}
+			}
+		}
+	}
+
+	.social-links {
+		a {
+			margin: 0 10px;
+			&:hover path {
+				transition: fill .2s;
+				fill: get-color(cyan);
+			}
+		}
+	}
+}
+
+
+@media screen and (max-width: 700px) {
+	#root .footer {
+		flex-direction: column;
+		align-items: center;
+
+		.references { margin: unset }
+	}
+}
+
+@media screen and (max-width: 430px) {
+	#root .footer .references {
+		grid-template-areas:
+			"reference-1"
+			"reference-2"
+			"reference-3";
+		row-gap: 20px;
+		text-align: center;
+		margin-bottom: 15%;
+	}
+}
