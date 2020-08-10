@@ -11,7 +11,7 @@ import { ReactComponent as IconInstagram } from '../../images/icon-instagram.svg
 export default function Footer() {
 	return (
 		<footer className="footer">
-			<BrandLogo className="brand" alt="logo-brand" />
+			<BrandLogo className="brand" />
 			
 			<section className="references">
 				{ReferenceData.map(RenderReferenceSection)}
@@ -20,16 +20,16 @@ export default function Footer() {
 			<div className="social-links">
 
 				<a className="navlink" href="./">
-					<IconFB alt="icon-fb" />
+					<IconFB />
 				</a>
 				<a className="navlink" href="./">
-					<IconTwitter alt="icon-twitter" />
+					<IconTwitter />
 				</a>
 				<a className="navlink" href="./">
-					<IconPinterest alt="icon-pinterest" />
+					<IconPinterest />
 				</a>
 				<a className="navlink" href="./">
-					<IconInstagram alt="icon-instagram" />
+					<IconInstagram />
 				</a>
 				
 			</div>

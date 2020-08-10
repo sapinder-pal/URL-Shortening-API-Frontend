@@ -28,7 +28,7 @@ export default function Header() {
 	return (
 		<header className="header">
 
-			<BrandLogo className="brand" alt="logo-brand" />
+			<BrandLogo className="brand" />
 
 			<nav className={`navbar`}>
 				<div className="nav-menu-1">

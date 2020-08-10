@@ -9,7 +9,7 @@ export default function Form(props) {
 			<div className="form-inner-wrapper">
 
 				<div className="input-wrapper">
-					<input className="input-link" placeholder="Enter a link here..." />
+					<input name="input-link" className="input-link" placeholder="Enter a link here..." />
 					<small className="error-message">Please add a link!</small>
 				</div>
 				

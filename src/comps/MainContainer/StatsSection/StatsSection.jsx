@@ -6,13 +6,13 @@ export default function StatsSection() {
 	return (
 		<section className="stats-section">
 
-			<main className="main-text">
+			<div className="main-text">
 				<h2 className="section-title">Advanced Statistics</h2>
 				<p className="section-subtitle">
 					Track how your links are performing across the web with our 
 					advanced statistics dashboard.
 				</p>
-			</main>
+			</div>
 
 			<div className="cards">
 				{CardsData.map(Card)}							
