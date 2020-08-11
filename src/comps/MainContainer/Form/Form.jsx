@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './Form.scss';
 
-export default function Form(props) {
-	/* props.setLocalState used at the end of handleFetch */
+import { LocalContext } from '../LocalStorageContext.jsx';
+
+export default function Form() {
+
+	const { currentLocalData, updateLocalData } = useContext(LocalContext);
 
 	return (
 		<form className="form" onSubmit={e=> handleSubmit(e)}>
@@ -19,30 +22,30 @@ export default function Form(props) {
 		</form>
 	)
 
+
 	/* SUBMISSION BEHAVIOR */
 	function handleSubmit(e) {
 		e.preventDefault();
 
 		let inputLink = document.querySelector('.form .input-link');
 
-		if (inputLink.value != '') {
-			inputLink.parentNode.classList.remove('error');
-
-			handleFetch(inputLink.value);
-		}
-
-		else {
+		if (inputLink.value === '') {
 			inputLink.parentNode.classList.add('error');
+		}
+		else {
+			inputLink.parentNode.classList.remove('error');
+			handleFetch(inputLink.value);
 		}
 	}
 
 
+
+	/* FETCHING & STORING SHORTENED LINKS */
 	function handleFetch(link) {
+
 		fetch('https://rel.ink/api/links/', {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
+			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ 'url': link })
 		})
 
@@ -54,52 +57,44 @@ export default function Form(props) {
 			return res.json();
 		})
 
-		.then((data) => {
-
-			let shortenedLink = 'https://rel.ink/' + data.hashid;
-
+		.then(data => {
 			let newLinkObject = {
 				originalLink: link,
-				shortenedLink: shortenedLink
+				shortenedLink: 'https://rel.ink/' + data.hashid
 			}
 
-			let currentLocalData = JSON.parse(localStorage.getItem('Links'));
-			let newLocalData;
+			let currentLinksArray = currentLocalData === null ?  [] : JSON.parse(currentLocalData);
+			let newLinksArray;
 
-			// if currentLocalData is null
-			if (!currentLocalData) {
-				currentLocalData = [];
-			}
-
-			if (currentLocalData.length < 3) {
-				currentLocalData.push(newLinkObject);
-				localStorage.setItem('Links', JSON.stringify(currentLocalData));
+			/* Only 3 items will be rendered */
+			if (currentLinksArray.length < 3) {
+			 	currentLinksArray.push(newLinkObject);
+			 	updateLocalData(currentLinksArray);
 			}
 			else {
-				newLocalData = [currentLocalData[1], currentLocalData[2], newLinkObject];
-				localStorage.setItem('Links', JSON.stringify(newLocalData));
+				newLinksArray = [currentLinksArray[1], currentLinksArray[2], newLinkObject];
+				updateLocalData(newLinksArray);
 			}
-
-			props.setLocalState(localStorage.getItem('Links'));
 		})
 
 		.catch(error => {
-			if (typeof error.json === "function") {
+
+			if (typeof error.json === 'function') {
 				error.json()
 					.then(jsonError => {
-						console.log("Json error from API");
+						console.log('Json error');
 						console.log(jsonError);
 					})
-					
 					.catch(genericError => {
-						console.log("Generic error from API");
+						console.log('Generic error');
 						console.log(error.statusText);
 					});
 			}
 			else {
-				console.log("Fetch error");
+				console.log('Fetch Error');
 				console.log(error);
 			}
 		});
+
 	}
 }

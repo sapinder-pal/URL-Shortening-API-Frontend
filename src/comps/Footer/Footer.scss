@@ -1,41 +1,41 @@
 @import '../colors.scss';
 
 .footer {
+	padding: 60px 10vw !important;
 	background: get-color(extreme-violet);
-	display: flex;
-	flex-flow: row wrap;
-	justify-content: center;
+	
+	display: grid;
+	grid-template-areas: "logo . reference-1 reference-2 reference-3 social-links";
+	gap: 50px;
 	
 	.brand {
-		margin-right: 5%;
-		margin-bottom: 15%;
-
+		grid-area: logo;
 		path {
 			fill: white;
 		}
 	}
-	
-	.references {
-		margin: auto 5% auto auto;
-		display: grid;
-		grid-template-areas: 
-		"reference-1 reference-2 reference-3"
-		"...            ...      reference-3";
-		column-gap: 50px;
 
-		@for $i from 1 through 3 {
-			.reference-group-#{$i} {
 
-				grid-area: reference-#{$i};
+	@for $i from 1 through 3 {
+		.reference-group-#{$i} {
 
-				.group-title {
-					color: white;
-					margin: 0 0 20px;
-				}
-				.navlink {
+			grid-area: reference-#{$i};
+			justify-self: end;
+
+			.group-title {
+				color: white;
+				margin: 0 0 20px;
+			}
+
+			ul {
+				list-style: none;
+				padding: 0;
+				
+				li .navlink {
 					margin: 10px 0;
 					display: block;
 					color: get-color(grayish-violet);
+
 					&:hover {
 						color: get-color(cyan);
 					}
@@ -45,8 +45,9 @@
 	}
 
 	.social-links {
+		grid-area: social-links;
 		a {
-			margin: 0 10px;
+			margin: 0 5px;
 			&:hover path {
 				transition: fill .2s;
 				fill: get-color(cyan);
@@ -56,23 +57,33 @@
 }
 
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 850px) {
 	#root .footer {
-		flex-direction: column;
-		align-items: center;
-
-		.references { margin: unset }
+		grid-template-areas:
+			"logo .  reference-1  reference-2 reference-3"
+			"...  .  social-links    ...       ...";
 	}
 }
 
-@media screen and (max-width: 430px) {
-	#root .footer .references {
+@media screen and (max-width: 750px) {
+	#root .footer {
 		grid-template-areas:
-			"reference-1"
-			"reference-2"
-			"reference-3";
-		row-gap: 20px;
-		text-align: center;
-		margin-bottom: 15%;
+			"logo           ...         ..."
+			"reference-1 reference-2 reference-3"
+			"...         social-links   ...";
+
+		> * { justify-self: center }
+	}
+}
+
+@media screen and (max-width: 500px) {
+	#root .footer {
+		grid-template-areas: none;
+		grid-template-rows: auto;
+
+		>* {
+			grid-area: unset;
+			text-align: center;
+		}
 	}
 }

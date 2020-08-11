@@ -23,17 +23,21 @@ export function RenderReferenceSection(props) {
 		<div className={`reference-group-${props.id}`} key={props.id}>
 
 			<h5 className="group-title">
-				{props.groupTitle}
+				{ props.groupTitle }
 			</h5>
 
-			{ props.links.map(RenderLink) }
+			<ul>
+				{ props.links.map(RenderLink) }
+			</ul>
 
 		</div>
 	)
 }
 
 function RenderLink(link, index) {
-	return <a key={index} className="navlink" href="./">
-						{link}
-					</a>
+	return <li key={index}>
+						<a className="navlink" href="./">
+							{link}
+						</a>
+					</li>
 }

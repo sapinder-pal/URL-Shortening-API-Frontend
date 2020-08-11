@@ -13,9 +13,7 @@ export default function Footer() {
 		<footer className="footer">
 			<BrandLogo className="brand" />
 			
-			<section className="references">
-				{ReferenceData.map(RenderReferenceSection)}
-			</section>
+			{ReferenceData.map(RenderReferenceSection)}
 		
 			<div className="social-links">
 

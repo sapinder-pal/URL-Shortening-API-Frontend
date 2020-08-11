@@ -1,31 +1,34 @@
-import React from 'react';
-import './GetLinks.scss';
+import React, { useContext } from 'react';
+import './RenderLinks.scss';
 
-export default function GetLinks(props) {
+import { LocalContext } from '../LocalStorageContext.jsx';
+
+export default function RenderLinks() {
 	
-	let linksData = JSON.parse(props.localState);
+	const contextType = useContext(LocalContext);
+	let linksArray = JSON.parse(contextType.currentLocalData);
 
-	if(linksData)
+	if(linksArray)
 		return (
 			<section className="get-links">
-				{linksData.reverse().map(renderList)}
+				{ linksArray.reverse().map(renderItem) }
 			</section>
 		)
 	else
 		return null;
 
-	function renderList(props, index) {
+	function renderItem(props, index) {
 		return (
 			<div className={`item${index + 1}`} key={index}>
-				<p className="original-link">
-					{props.originalLink}
-				</p>
-				<p className="shortened-link">
-					{props.shortenedLink}
-				</p>
+
+				<p className="original-link">{ props.originalLink }</p>
+
+				<p className="shortened-link">{ props.shortenedLink }</p>
+
 				<button type="button" className="cta-box" onClick={e=> copyToClipboard(e)}>
 					Copy
 				</button>
+				
 			</div>
 		)
 	}

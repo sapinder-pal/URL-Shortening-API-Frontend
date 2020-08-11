@@ -37,6 +37,8 @@
 				
 				@include cta-box(white, get-color(gray), 10px);
 				padding: 1rem 1.5rem;
+
+				&:focus {	box-shadow: 0 0 10px 2px #000000c4	}
 			}
 			
 			position: relative;
@@ -51,7 +53,7 @@
 			/************* ERROR CASE ******************/
 			&.error {
 				.input-link {
-					border: 2px solid get-color(red);
+					box-shadow: 0 0 0 2px get-color(red);
 
 					&::placeholder {
 						color: get-color(light-red);

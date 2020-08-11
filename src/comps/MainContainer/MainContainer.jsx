@@ -3,20 +3,22 @@ import './MainContainer.scss';
 
 import TopSection from './TopSection/TopSection.jsx';
 import Form from './Form/Form.jsx';
-import GetLinks from './GetLinks/GetLinks.jsx';
+import RenderLinks from './RenderLinks/RenderLinks.jsx';
 import StatsSection from './StatsSection/StatsSection.jsx';
+import LocalContextProvider from './LocalStorageContext.jsx';
+
 
 export default function MainContainer() {
 
-	const [localState, setLocalState] = useState(localStorage.getItem('Links'));
-	
 	return (
 		<main className="main-container">
 
 			<TopSection/>
 
-			<Form setLocalState={setLocalState} />
-			<GetLinks localState={localState}  />
+			<LocalContextProvider>
+				<Form/>
+				<RenderLinks/>
+			</LocalContextProvider>
 
 			<StatsSection/>
 
